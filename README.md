@@ -28,19 +28,27 @@ entonces el for lo cambio por foreach y navego por todos los elemento creo la in
     public void updateQuality(List<Item> items) {
         this.items = items;
         for (Item item : items) {
-          item.setSellIn(item.getSellIn() - 1);
-          if (NameItem.AGED_BRIE.equals(item.getName())) {
-              itemUpdateOperation = new AgedBrie();
-          } else if (NameItem.BACKSTAGE.equals(item.getName())) {
-              itemUpdateOperation = new Backstage();
-          } else if (NameItem.SULFURAS.equals(item.getName())) {
-              itemUpdateOperation = new Sulfuras();
-          } else if (NameItem.CONJURED.equals(item.getName())) {
-              itemUpdateOperation = new Conjured();
-          } else {
-              itemUpdateOperation = new Normal();
-          }
-          itemUpdateOperation.calculateAndSaveQualityItem(item);
+            item.setSellIn(item.getSellIn() - 1);
+            switch (item.getName()) {
+                case NameItem.AGED_BRIE:
+                    itemUpdateOperation = new AgedBrie();
+                    itemUpdateOperation.calculateAndSaveQualityItem(item);
+                    break;
+                case NameItem.BACKSTAGE:
+                    itemUpdateOperation = new Backstage();
+                    itemUpdateOperation.calculateAndSaveQualityItem(item);
+                    break;
+                case NameItem.CONJURED:
+                    itemUpdateOperation = new Conjured();
+                    itemUpdateOperation.calculateAndSaveQualityItem(item);
+                    break;
+                case NameItem.SULFURAS:
+                    break;
+                default:
+                    itemUpdateOperation = new Normal();
+                    itemUpdateOperation.calculateAndSaveQualityItem(item);
+                    break;
+            }
         }
     }
 
